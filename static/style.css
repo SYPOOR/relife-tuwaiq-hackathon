@@ -1229,7 +1229,7 @@ body.onboarding-open { overflow: hidden; }
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: min(72dvh, 720px);
+    max-height: min(80dvh, 820px);
     aspect-ratio: auto;
     object-fit: contain;
     object-position: center bottom;
@@ -1246,7 +1246,7 @@ body.onboarding-open { overflow: hidden; }
         width: auto;
         height: auto;
         max-width: 100%;
-        max-height: min(68dvh, 620px);
+        max-height: min(76dvh, 720px);
         aspect-ratio: auto;
         object-fit: contain;
         object-position: center bottom;
@@ -1263,7 +1263,7 @@ body.onboarding-open { overflow: hidden; }
     .community-post .community-photo {
         width: auto;
         height: auto;
-        max-height: 60dvh;
+        max-height: 68dvh;
     }
 }
 
