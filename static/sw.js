@@ -1,4 +1,4 @@
-const CACHE_NAME = "relife-shell-v30";
+const CACHE_NAME = "relife-shell-v31";
 const APP_SHELL = [
     "/",
     "/community",

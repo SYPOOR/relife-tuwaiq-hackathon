@@ -1229,7 +1229,7 @@ body.onboarding-open { overflow: hidden; }
     height: 100%;
     max-height: none;
     aspect-ratio: auto;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center bottom;
     box-shadow: 0 0 28px rgba(21,35,24,.12);
 }
