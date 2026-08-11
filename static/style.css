@@ -1065,7 +1065,7 @@ body.onboarding-open { overflow: hidden; }
     height: clamp(210px, 30vw, 340px);
     max-height: 42dvh;
     aspect-ratio: 4 / 3;
-    object-fit: contain;
+    object-fit: scale-down;
     object-position: center;
 }
 .community-post .post-text {
@@ -1198,7 +1198,8 @@ body.onboarding-open { overflow: hidden; }
     display: grid;
     place-items: center;
     background: #dfe4dc;
-    width: 100%;
+    width: min(100%, 560px);
+    margin-inline: auto;
     height: auto;
     max-height: min(70dvh, 680px);
     aspect-ratio: 4 / 5;
@@ -1229,7 +1230,7 @@ body.onboarding-open { overflow: hidden; }
     height: 100%;
     max-height: none;
     aspect-ratio: auto;
-    object-fit: contain;
+    object-fit: scale-down;
     object-position: center bottom;
     box-shadow: 0 0 28px rgba(21,35,24,.12);
 }
@@ -1244,7 +1245,7 @@ body.onboarding-open { overflow: hidden; }
         height: 100%;
         max-height: none;
         aspect-ratio: auto;
-        object-fit: contain;
+        object-fit: scale-down;
         object-position: center bottom;
     }
 }
