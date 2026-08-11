@@ -19,7 +19,7 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}?v=33"
+        href="{{ url_for('static', filename='style.css') }}?v=34"
     >
 </head>
 
@@ -98,8 +98,8 @@
                             src="{{ url_for('static', filename=post['image']) }}"
                             class="community-photo"
                             alt="مشاركة {{ post['username'] }}"
-                            width="800"
-                            height="1000"
+                            width="768"
+                            height="1376"
                             loading="{{ 'eager' if loop.first else 'lazy' }}"
                             decoding="async"
                             {% if loop.first %}fetchpriority="high"{% endif %}
@@ -387,7 +387,7 @@
 
 
 <script
-    src="{{ url_for('static', filename='app.js') }}?v=33"
+    src="{{ url_for('static', filename='app.js') }}?v=34"
 ></script>
 
 </body>
