@@ -1,4 +1,4 @@
-const CACHE_NAME = "relife-shell-v25";
+const CACHE_NAME = "relife-shell-v26";
 const APP_SHELL = [
     "/",
     "/community",
@@ -42,14 +42,19 @@ self.addEventListener("fetch", function (event) {
 
     if (url.pathname.startsWith("/static/")) {
         event.respondWith(
-            fetch(event.request).then(function (response) {
-                    const copy = response.clone();
-                    caches.open(CACHE_NAME).then(function (cache) {
-                        cache.put(event.request, copy);
-                    });
+            caches.match(event.request).then(function (cached) {
+                const update = fetch(event.request).then(function (response) {
+                    if (response.ok) {
+                        const copy = response.clone();
+                        caches.open(CACHE_NAME).then(function (cache) {
+                            cache.put(event.request, copy);
+                        });
+                    }
                     return response;
-            }).catch(function () {
-                return caches.match(event.request);
+                }).catch(function () {
+                    return cached;
+                });
+                return cached || update;
             })
         );
         return;

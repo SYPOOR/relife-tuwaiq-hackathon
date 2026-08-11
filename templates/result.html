@@ -18,7 +18,7 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}?v=8"
+        href="{{ url_for('static', filename='style.css') }}?v=27"
     >
 </head>
 
@@ -325,6 +325,15 @@
                 <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
                 <circle cx="12" cy="13" r="4"/>
             </svg>
+            <span>التصوير</span>
+        </a>
+
+
+        <a href="{{ url_for('impact') }}" class="nav-link">
+            <svg viewBox="0 0 24 24">
+                <path d="m12 3 2.5 5.1 5.6.8-4 3.9.9 5.5-5-2.7-5 2.7.9-5.5-4-3.9 5.6-.8L12 3Z"/>
+            </svg>
+            <span>أثري</span>
         </a>
 
 
@@ -346,7 +355,7 @@
 
 </div>
 
-<script src="{{ url_for('static', filename='app.js') }}?v=16"></script>
+<script src="{{ url_for('static', filename='app.js') }}?v=27"></script>
 
 </body>
 </html>

@@ -69,28 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const bottomNavigation = document.querySelector(".bottom-navigation");
-    if (bottomNavigation) {
-        const cameraNav = bottomNavigation.querySelector(".nav-camera");
-        if (cameraNav && !cameraNav.querySelector("span")) {
-            const label = document.createElement("span");
-            label.textContent = "التصوير";
-            cameraNav.appendChild(label);
-        }
-
-        if (!bottomNavigation.querySelector('[href="/impact"]')) {
-            const impactLink = document.createElement("a");
-            impactLink.href = "/impact";
-            impactLink.className = "nav-link";
-            impactLink.innerHTML = '<svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.1 5.6.8-4 3.9.9 5.5-5-2.7-5 2.7.9-5.5-4-3.9 5.6-.8L12 3Z"/></svg><span>أثري</span>';
-            const communityLink = bottomNavigation.querySelector('a[href*="community"]');
-            bottomNavigation.insertBefore(impactLink, communityLink || null);
-        }
-    }
-    if (bottomNavigation && bottomNavigation.parentElement !== document.body) {
-        document.body.appendChild(bottomNavigation);
-    }
-
     requestAnimationFrame(function () {
         document.body.classList.add("page-ready");
     });
