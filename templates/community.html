@@ -13,12 +13,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='assets/logo.png') }}" type="image/png">
 
     <title>مجتمع إعادة الاستخدام</title>
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}?v=27"
+        href="{{ url_for('static', filename='style.css') }}?v=28"
     >
 </head>
 
@@ -97,7 +98,11 @@
                             src="{{ url_for('static', filename=post['image']) }}"
                             class="community-photo"
                             alt="مشاركة {{ post['username'] }}"
-                            loading="lazy"
+                            width="800"
+                            height="1000"
+                            loading="{{ 'eager' if loop.first else 'lazy' }}"
+                            decoding="async"
+                            {% if loop.first %}fetchpriority="high"{% endif %}
                         >
 
                     </div>
@@ -382,7 +387,7 @@
 
 
 <script
-    src="{{ url_for('static', filename='app.js') }}?v=27"
+    src="{{ url_for('static', filename='app.js') }}?v=28"
 ></script>
 
 </body>

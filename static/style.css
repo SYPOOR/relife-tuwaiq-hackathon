@@ -1053,7 +1053,11 @@ body.onboarding-open { overflow: hidden; }
     gap: 14px;
     align-items: start;
 }
-.community-post { border-radius: 20px; }
+.community-post {
+    border-radius: 20px;
+    content-visibility: auto;
+    contain-intrinsic-block-size: 720px;
+}
 .community-post .post-header { min-height: 58px; padding: 11px 12px; }
 .community-post .post-avatar { width: 35px; height: 35px; border-radius: 11px; font-size: 16px; }
 .community-post .community-photo {
@@ -1194,7 +1198,10 @@ body.onboarding-open { overflow: hidden; }
     display: grid;
     place-items: center;
     background: #dfe4dc;
-    height: clamp(360px, 56dvh, 560px);
+    width: 100%;
+    height: auto;
+    max-height: min(70dvh, 680px);
+    aspect-ratio: 4 / 5;
 }
 .community-post .post-photo-wrap::before {
     content: "";
@@ -1228,7 +1235,9 @@ body.onboarding-open { overflow: hidden; }
 
 @media (max-width: 650px) {
     .community-post .post-photo-wrap {
-        height: clamp(330px, 54dvh, 500px);
+        height: auto;
+        max-height: min(64dvh, 560px);
+        aspect-ratio: 4 / 5;
     }
     .community-post .community-photo {
         height: 100%;
@@ -1240,8 +1249,10 @@ body.onboarding-open { overflow: hidden; }
 
 @media (max-height: 700px) and (max-width: 650px) {
     .community-post .post-photo-wrap {
-        height: min(52dvh, 390px);
-        min-height: 285px;
+        height: auto;
+        max-height: 56dvh;
+        min-height: 0;
+        aspect-ratio: 4 / 5;
     }
     .community-post .community-photo {
         height: 100%;
