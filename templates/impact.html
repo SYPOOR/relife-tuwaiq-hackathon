@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f7f3ea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+    <title>أثري — إعادة الحياة</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=26">
+</head>
+<body class="impact-page">
+<div class="app impact-app">
+    <main class="impact-dashboard">
+        <img
+            class="impact-brand-logo"
+            src="{{ url_for('static', filename='assets/logo.png') }}"
+            alt="إعادة الحياة"
+        >
+
+        <div class="profile-actions" aria-label="إجراءات الحساب">
+            <span aria-label="التنبيهات"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span>
+        </div>
+
+        <section class="impact-profile" aria-label="الملف الشخصي">
+            <img class="impact-avatar" src="{{ url_for('static', filename='assets/profile-ahmed.webp') }}" alt="صورة أحمد">
+            <div class="impact-person-copy">
+                <h2>أحمد</h2>
+                <p>مستخدم نشط <span aria-hidden="true">🌱</span></p>
+            </div>
+        </section>
+
+        <section class="impact-score-card" aria-label="الرصيد الأخضر">
+            <div class="score-copy"><span>Eco Score</span><div><strong>{{ eco_score }}</strong><small>نقطة</small></div></div>
+            <div class="score-leaf" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 8.8 5 15c0 2.8 2.2 5 5 5 6.2 0 10-7 10-16Z"/><path d="M4 21c2.8-5.7 6.5-9.2 12-12"/></svg>
+            </div>
+        </section>
+
+        <section class="impact-stats" aria-label="إحصاءات الأثر">
+            <article><strong>{{ eco_score }}</strong><span>إجمالي النقاط</span></article>
+            <article><strong>{{ ideas_count }}</strong><span>الأفكار المنفذة</span></article>
+            <article><strong>{{ analysis_count }}</strong><span>العناصر المصنفة</span></article>
+        </section>
+
+        <section class="achievements-section">
+            <div class="achievements-heading"><h2>إنجازاتي</h2></div>
+            <div class="badges-row">
+                <article class="achievement-badge {{ 'unlocked' if post_count >= 1 else 'locked' }}">
+                    <div class="medal medal-gold"><svg viewBox="0 0 24 24"><path d="M4 17h16l-1-9-4 4-3-7-3 7-4-4-1 9Z"/><path d="M5 20h14"/></svg></div>
+                    <strong>ملهم المجتمع</strong><span>انشر أول تجربة</span>
+                </article>
+                <article class="achievement-badge {{ 'unlocked' if analysis_count >= 3 else 'locked' }}">
+                    <div class="medal medal-leaf"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 8.8 5 15c0 2.8 2.2 5 5 5 6.2 0 10-7 10-16Z"/><path d="M4 21c2.8-5.7 6.5-9.2 12-12"/></svg></div>
+                    <strong>صانع الأفكار</strong><span>حلّل 3 عناصر</span>
+                </article>
+                <article class="achievement-badge {{ 'unlocked' if analysis_count >= 1 else 'locked' }}">
+                    <div class="medal medal-forest"><b aria-hidden="true">♻</b></div>
+                    <strong>البداية الخضراء</strong><span>حلّل أول عنصر</span>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-navigation">
+        <a href="{{ url_for('index') }}" class="nav-link"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>الرئيسية</span></a>
+        <a href="{{ url_for('index') }}#camera" class="nav-camera" aria-label="التصوير"><svg viewBox="0 0 24 24"><path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/><circle cx="12" cy="13" r="4"/></svg><span>التصوير</span></a>
+        <a href="{{ url_for('impact') }}" class="nav-link active"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 5.1 5.6.8-4 3.9.9 5.5-5-2.7-5 2.7.9-5.5-4-3.9 5.6-.8L12 3Z"/></svg><span>أثري</span></a>
+        <a href="{{ url_for('community') }}" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M15 15c3 0 5 1.5 5 4"/></svg><span>المجتمع</span></a>
+    </nav>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}?v=16"></script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#faf9f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+
+    <title>نتيجة التحليل</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}?v=8"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="page-top">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="round-back"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="m9 18 6-6-6-6"/>
+            </svg>
+        </a>
+
+
+        <div>
+            <span class="page-eyebrow">
+                الذكاء الاصطناعي
+            </span>
+
+            <h1>
+                نتيجة التحليل
+            </h1>
+        </div>
+
+
+        <img
+            src="{{ url_for('static', filename='assets/logo.png') }}"
+            class="mini-logo"
+            alt=""
+        >
+
+    </header>
+
+
+    <main class="result-layout">
+
+        <section class="result-main">
+
+            <div class="object-photo">
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + image_filename) }}"
+                    alt="{{ result.item_name }}"
+                    fetchpriority="high"
+                >
+
+                <span class="ai-chip">
+                    ✦ تحليل ذكي
+                </span>
+
+            </div>
+
+
+            <article class="result-card">
+
+                <div class="result-title-row">
+
+                    <div>
+                        <span class="result-label">
+                            اسم العنصر
+                        </span>
+
+                        <h2>
+                            {{ result.item_name }}
+                        </h2>
+                    </div>
+
+
+                    <div class="recycle-mark">
+                        ♻
+                    </div>
+
+                </div>
+
+
+                <div class="result-info-row">
+
+                    <div class="result-info-item">
+
+                        <div class="info-symbol">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 3h6l1 3 3 2-2 3v7H7v-7L5 8l3-2 1-3Z"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <span>نوع المادة</span>
+                            <strong>{{ result.material }}</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-info-item">
+
+                        <div class="info-symbol">
+                            <svg viewBox="0 0 24 24">
+                                <path d="m12 3 3 5h-3l3 5h-3l3 5H9l3-5H9l3-5H9l3-5Z"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <span>التصنيف</span>
+                            <strong>{{ result.category }}</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="disposal-box">
+
+                    <div class="disposal-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 7h16"/>
+                            <path d="M9 3h6l1 4H8l1-4Z"/>
+                            <path d="m6 7 1 14h10l1-14"/>
+                        </svg>
+                    </div>
+
+
+                    <div>
+                        <span>
+                            طريقة التعامل الصحيحة
+                        </span>
+
+                        <p>
+                            {{ result.recycling_instruction }}
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="reason-box">
+
+                    <div class="reason-question">
+                        <span>i</span>
+                        لماذا؟
+                    </div>
+
+                    <p>
+                        {{ result.reason }}
+                    </p>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="ideas-panel">
+
+            {% if cache_hit %}
+            <div class="cache-note">⚡ استعدنا النتيجة المحفوظة دون استهلاك API جديد</div>
+            {% endif %}
+
+            <div class="section-title">
+
+                <div>
+                    <span class="eyebrow">
+                        حياة ثانية
+                    </span>
+
+                    <h2>
+                        ماذا يمكنك أن تصنع؟
+                    </h2>
+                </div>
+
+
+                <div class="idea-bulb">
+                    ✦
+                </div>
+
+            </div>
+
+
+            <p class="section-description">
+                أربع أفكار ابتكرها الذكاء الاصطناعي خصيصًا من العنصر الذي صورته.
+            </p>
+
+
+            {% if result.ideas_image %}
+
+            <div class="ideas-ai-image">
+
+                <img
+                    src="{{ url_for('static', filename=result.ideas_image) }}"
+                    alt="أفكار إعادة الاستخدام"
+                    loading="lazy"
+                >
+
+                <span>
+                    <b>4</b> تصورات مولدة من صورتك
+                </span>
+
+                <div class="idea-hotspots" aria-label="اختيار فكرة من الصورة">
+                    {% for idea in result.ideas %}
+                    <a
+                        href="{{ url_for('idea', idea_id=idea.id, analysis=analysis_id) }}"
+                        aria-label="{{ idea.title }}"
+                    ><b>{{ loop.index }}</b><small>{{ idea.title }}</small></a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="reuse-list">
+
+                <div class="list-heading">
+                    <span>اختر الأقرب لك</span>
+                    <small>اضغط لرؤية الأدوات والخطوات</small>
+                </div>
+
+                {% for idea in result.ideas %}
+
+                <a
+                    href="{{ url_for('idea', idea_id=idea.id, analysis=analysis_id) }}"
+                    class="reuse-card"
+                >
+
+                    <div class="reuse-number">
+                        {{ loop.index }}
+                    </div>
+
+                    <div class="reuse-content">
+                        <div class="reuse-meta">
+                            <span>{{ idea.difficulty }}</span>
+                            <span>حوالي {{ idea.time_minutes }} دقيقة</span>
+                        </div>
+                        <h3>
+                            {{ idea.title }}
+                        </h3>
+
+                        <p>
+                            {{ idea.description }}
+                        </p>
+                    </div>
+
+                    <svg
+                        class="reuse-arrow"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+
+                    <span class="reuse-cta">عرض الخطوات</span>
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+
+            <a
+                href="{{ url_for('index') }}#camera"
+                class="secondary-wide-button"
+            >
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+
+                صوّر عنصراً آخر
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <nav class="bottom-navigation">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="nav-link active"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="m3 11 9-8 9 8"/>
+                <path d="M5 10v10h14V10"/>
+            </svg>
+
+            <span>الرئيسية</span>
+        </a>
+
+
+        <a
+            href="{{ url_for('index') }}#camera"
+            class="nav-camera"
+            aria-label="الكاميرا"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                <circle cx="12" cy="13" r="4"/>
+            </svg>
+        </a>
+
+
+        <a
+            href="{{ url_for('community') }}"
+            class="nav-link"
+        >
+            <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3"/>
+                <circle cx="17" cy="9" r="2"/>
+                <path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/>
+                <path d="M15 15c3 0 5 1.5 5 4"/>
+            </svg>
+
+            <span>المجتمع</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}?v=16"></script>
+
+</body>
+</html>

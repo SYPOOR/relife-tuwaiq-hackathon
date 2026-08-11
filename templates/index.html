@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+    <meta name="theme-color" content="#faf9f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="إعادة الحياة">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+
+    <title>إعادة الحياة</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}?v=11"
+    >
+</head>
+
+<body class="home-page">
+
+<div class="onboarding-screen" id="onboardingScreen" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <div class="onboarding-card">
+        <div class="onboarding-brand" aria-hidden="true">
+            <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="">
+            <span>RE:LIFE</span>
+        </div>
+
+        <div class="onboarding-copy">
+            <span class="onboarding-kicker">مرحبًا بك في إعادة الحياة</span>
+            <h1 id="onboardingTitle">إعادة الحياة<br><em>لكل شيء</em></h1>
+            <p>معًا من أجل مستقبل أكثر استدامة</p>
+        </div>
+
+        <div class="onboarding-art">
+            <img
+                src="{{ url_for('static', filename='assets/onboarding-hero.webp') }}"
+                alt="حاوية إعادة تدوير خضراء محاطة بالنباتات"
+                fetchpriority="high"
+            >
+        </div>
+
+        <button type="button" class="onboarding-start" id="startAppButton">
+            <span>لنبدأ</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+    </div>
+</div>
+
+<div class="app">
+
+    {% if error_message %}
+    <div class="app-error" role="alert">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    <header class="home-header">
+        <div class="home-welcome">
+            <span class="brand-kicker">مرحبًا بك 👋</span>
+            <h1>مستعد <em>تُحدث فرقًا؟</em></h1>
+        </div>
+
+        <img
+            class="app-logo"
+            src="{{ url_for('static', filename='assets/logo.png') }}"
+            alt="شعار التطبيق"
+        >
+    </header>
+
+
+    <main class="home-layout">
+
+        <div class="home-primary">
+
+            <section class="stats-grid" id="impact">
+
+                <article class="stat-card">
+                    <span class="stat-label">أثرك الأخضر</span>
+
+                    <strong>{{ eco_score|default(0) }}</strong>
+
+                    <div class="stat-footer">
+                        <span class="leaf-dot">●</span>
+                        نقطة
+                    </div>
+                </article>
+
+
+                <article class="stat-card">
+                    <span class="stat-label">
+                        العناصر المصنفة
+                    </span>
+
+                    <strong>{{ analysis_count|default(0) }}</strong>
+
+                    <div class="stat-footer">
+                        عنصر
+                    </div>
+                </article>
+
+            </section>
+
+
+            <section class="scan-panel">
+
+                <div class="scan-copy">
+                    <span class="eyebrow">
+                        الذكاء الاصطناعي
+                    </span>
+
+                    <h2>
+                        صوّر أي عنصر
+                    </h2>
+
+                    <p>
+                        صورة واحدة تتحول إلى أربع أفكار عملية
+                        مصممة خصيصًا للغرض الذي بين يديك.
+                    </p>
+                    <div class="scan-benefits">
+                        <span>تحليل فوري</span>
+                        <span>4 تصورات</span>
+                        <span>خطوات واضحة</span>
+                    </div>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="main-camera-button"
+                    id="openCameraButton"
+                >
+                    <span class="main-camera-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+
+                    </span>
+
+                    <span>
+                        <strong>التقط صورة</strong>
+                        <small>باستخدام الكاميرا</small>
+                    </span>
+                </button>
+
+
+                <div class="upload-separator">
+                    <span>أو</span>
+                </div>
+
+
+                <label
+                    for="galleryInput"
+                    class="gallery-button"
+                >
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="16" rx="3"/>
+                        <circle cx="8.5" cy="9" r="1.5"/>
+                        <path d="m4 17 5-5 4 4 2-2 5 5"/>
+                    </svg>
+
+                    اختيار صورة من الاستديو
+                </label>
+
+
+                <form
+                    action="{{ url_for('analyze') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="analyzeForm"
+                >
+
+                    <input
+                        type="file"
+                        id="galleryInput"
+                        name="image"
+                        accept="image/jpeg,image/png,image/webp"
+                        class="file-input-hidden"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="cameraImageData"
+                        name="camera_image"
+                    >
+
+
+                    <div
+                        class="selected-image hidden"
+                        id="selectedImageCard"
+                    >
+
+                        <div class="selected-image-preview">
+
+                            <img
+                                id="selectedImage"
+                                alt="الصورة المحددة"
+                            >
+
+                            <button
+                                type="button"
+                                id="removePhotoButton"
+                                class="remove-photo"
+                                aria-label="حذف الصورة"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="analyze-button"
+                            id="analyzeButton"
+                        >
+                            ✨ تحليل العنصر
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+
+    </main>
+
+
+    <nav class="bottom-navigation">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="nav-link active"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="m3 11 9-8 9 8"/>
+                <path d="M5 10v10h14V10"/>
+            </svg>
+
+            <span>الرئيسية</span>
+        </a>
+
+
+        <button
+            type="button"
+            class="nav-camera"
+            id="bottomCameraButton"
+            aria-label="فتح الكاميرا"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                <circle cx="12" cy="13" r="4"/>
+            </svg>
+            <span>التصوير</span>
+        </button>
+
+        <a href="{{ url_for('impact') }}" class="nav-link">
+            <svg viewBox="0 0 24 24">
+                <path d="m12 3 2.5 5.1 5.6.8-4 3.9.9 5.5-5-2.7-5 2.7.9-5.5-4-3.9 5.6-.8L12 3Z"/>
+            </svg>
+            <span>أثري</span>
+        </a>
+
+        <a
+            href="{{ url_for('community') }}"
+            class="nav-link"
+        >
+            <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3"/>
+                <circle cx="17" cy="9" r="2"/>
+                <path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/>
+                <path d="M15 15c3 0 5 1.5 5 4"/>
+            </svg>
+
+            <span>المجتمع</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<div class="analysis-loading hidden" id="analysisLoading" aria-live="polite">
+    <div class="analysis-loading-card">
+        <div class="analysis-orbit"><span>✦</span></div>
+        <span class="eyebrow">Gemini AI</span>
+        <h2>نكتشف حياة جديدة لعنصرك</h2>
+        <p id="analysisLoadingText">نحلل العنصر والمواد…</p>
+        <div class="analysis-progress"><i></i></div>
+        <small>قد يستغرق توليد التصورات عدة ثوانٍ</small>
+    </div>
+</div>
+
+
+<div
+    class="camera-screen hidden"
+    id="cameraScreen"
+>
+
+    <video
+        id="cameraVideo"
+        autoplay
+        muted
+        playsinline
+    ></video>
+
+
+    <div class="camera-top">
+
+        <button
+            type="button"
+        id="closeCameraButton"
+        class="camera-control"
+        aria-label="إغلاق الكاميرا"
+        >
+            ×
+        </button>
+
+
+        <div class="camera-tip">
+            ضع العنصر بوضوح داخل الإطار
+        </div>
+
+
+        <div class="camera-control camera-placeholder"></div>
+
+    </div>
+
+
+    <div class="focus-frame">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <div
+        id="cameraMessage"
+        class="camera-message hidden"
+    ></div>
+
+
+    <div class="camera-bottom">
+
+        <label
+            for="galleryInput"
+            class="camera-small-action"
+            id="cameraGalleryButton"
+        >
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="3"/>
+                <circle cx="8.5" cy="9" r="1.5"/>
+                <path d="m4 17 5-5 4 4 2-2 5 5"/>
+            </svg>
+
+            <span>الصور</span>
+        </label>
+
+
+        <button
+            type="button"
+            class="shutter"
+            id="captureButton"
+            aria-label="التقاط صورة"
+        >
+            <span></span>
+        </button>
+
+
+        <button
+            type="button"
+            class="camera-small-action"
+            id="switchCameraButton"
+            aria-label="تبديل الكاميرا"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M20 7h-4V3"/>
+                <path d="M20 3a9 9 0 0 0-15 3"/>
+                <path d="M4 17h4v4"/>
+                <path d="M4 21a9 9 0 0 0 15-3"/>
+            </svg>
+
+            <span>تبديل</span>
+        </button>
+
+    </div>
+
+</div>
+
+
+<canvas
+    id="cameraCanvas"
+    hidden
+></canvas>
+
+
+<script
+    src="{{ url_for('static', filename='app.js') }}?v=16"
+></script>
+
+</body>
+</html>

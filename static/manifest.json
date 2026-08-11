@@ -1,0 +1,20 @@
+{
+  "name": "إعادة الحياة",
+  "short_name": "RE:LIFE",
+  "description": "أفكار عملية لإعادة استخدام الأشياء بالذكاء الاصطناعي",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f1e7",
+  "theme_color": "#285b3b",
+  "icons": [
+    {
+      "src": "/static/assets/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

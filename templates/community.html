@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#faf9f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+
+    <title>مجتمع إعادة الاستخدام</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}?v=15"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="community-header">
+
+        <div>
+            <span class="eyebrow">
+                شارك وألهم
+            </span>
+
+            <h1>
+                مجتمع إعادة الاستخدام
+            </h1>
+            <p class="community-subtitle">أفكار حقيقية من أشخاص أعطوا أغراضهم فرصة ثانية.</p>
+        </div>
+
+
+        <button
+            type="button"
+            class="create-post-button"
+            onclick="openPostModal()"
+        >
+            <span>＋</span>
+            مشاركة
+        </button>
+
+    </header>
+
+
+    <main class="community-layout">
+
+        <section class="community-feed">
+
+            {% if posts %}
+
+                {% for post in posts %}
+
+                <article class="community-post">
+
+                    <header class="post-header">
+
+                        <div class="post-person">
+
+                            <div class="post-avatar">
+                                {{ post["avatar"] }}
+                            </div>
+
+
+                            <div>
+                                <strong>
+                                    {{ post["username"] }}
+                                </strong>
+
+                                <span>
+                                    أعاد استخدام عنصر
+                                </span>
+                            </div>
+
+                        </div>
+
+
+                        <span class="post-eco-chip">إعادة استخدام ♻</span>
+
+                    </header>
+
+
+                    {% if post["image"] %}
+
+                    <div class="post-photo-wrap">
+
+                        <img
+                            src="{{ url_for('static', filename=post['image']) }}"
+                            class="community-photo"
+                            alt="مشاركة {{ post['username'] }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <div class="post-text">
+                        {{ post["caption"] }}
+                    </div>
+
+
+                    <footer class="post-footer">
+
+                        <button
+                            type="button"
+                            class="post-action"
+                            data-like-post="{{ post['id'] }}"
+                            aria-pressed="false"
+                            aria-label="إعجاب"
+                            onclick="likePost({{ post['id'] }}, this)"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"/>
+                            </svg>
+
+                            <span>
+                                {{ post["likes"] }}
+                            </span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="post-action"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.3 9.3 0 0 1-4-.9L3 21l1.6-4.5A8.4 8.4 0 1 1 21 11.5Z"/>
+                            </svg>
+
+                            <span>
+                                {{ post["comments"] }}
+                            </span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="post-action post-share"
+                            onclick="sharePost({{ post['caption']|tojson }})"
+                            aria-label="مشاركة المنشور"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="18" cy="5" r="3"/>
+                                <circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <path d="m8.6 10.5 6.8-4"/>
+                                <path d="m8.6 13.5 6.8 4"/>
+                            </svg>
+                        </button>
+
+                    </footer>
+
+                </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-community">
+
+                    <img
+                        src="{{ url_for('static', filename='assets/empty-community.png') }}"
+                        alt=""
+                    >
+
+                    <h2>
+                        كن أول من يشارك
+                    </h2>
+
+                    <p>
+                        شارك فكرتك وألهم الآخرين بإعادة الاستخدام.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <aside class="community-side">
+
+            <img
+                src="{{ url_for('static', filename='assets/welcome-illustration.png') }}"
+                alt=""
+            >
+
+            <h2>
+                كل فكرة تصنع فرقاً
+            </h2>
+
+            <p>
+                شاهد كيف أعطى الآخرون أغراضهم القديمة حياة جديدة.
+            </p>
+
+
+            <button
+                type="button"
+                class="primary-wide-button"
+                onclick="openPostModal()"
+            >
+                ＋ شارك فكرتك
+            </button>
+
+        </aside>
+
+    </main>
+
+
+    <nav class="bottom-navigation">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="nav-link"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="m3 11 9-8 9 8"/>
+                <path d="M5 10v10h14V10"/>
+            </svg>
+
+            <span>الرئيسية</span>
+        </a>
+
+
+        <a
+            href="{{ url_for('index') }}#camera"
+            class="nav-camera"
+            aria-label="الكاميرا"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                <circle cx="12" cy="13" r="4"/>
+            </svg>
+        </a>
+
+
+        <a
+            href="{{ url_for('community') }}"
+            class="nav-link active"
+        >
+            <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3"/>
+                <circle cx="17" cy="9" r="2"/>
+                <path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/>
+                <path d="M15 15c3 0 5 1.5 5 4"/>
+            </svg>
+
+            <span>المجتمع</span>
+        </a>
+
+    </nav>
+
+</div>
+
+
+<div
+    class="modal-overlay hidden"
+    id="postModal"
+>
+
+    <div class="post-modal">
+
+        <header>
+
+            <div>
+                <span class="eyebrow">
+                    مجتمع إعادة الاستخدام
+                </span>
+
+                <h2>
+                    مشاركة جديدة
+                </h2>
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closePostModal()"
+            >
+                ×
+            </button>
+
+        </header>
+
+
+        <form
+            action="{{ url_for('create_post') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="field">
+
+                <label>
+                    الاسم
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="مثال: أحمد"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    مشاركتك
+                </label>
+
+                <textarea
+                    name="caption"
+                    required
+                    placeholder="وش سويت بالعنصر؟"
+                ></textarea>
+
+            </div>
+
+
+            <label class="post-upload" for="postImageInput">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 4 7.5 6H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-2.5L15 4H9Z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+
+                <span>
+                    أضف صورة لنتيجتك
+                </span>
+
+                <input
+                    type="file"
+                    id="postImageInput"
+                    name="image"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+
+            </label>
+
+            <div class="post-image-preview hidden" id="postImagePreview">
+                <img id="postPreviewImage" alt="معاينة صورة المشاركة">
+                <button type="button" id="removePostImage" aria-label="حذف الصورة">×</button>
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-wide-button"
+            >
+                نشر المشاركة
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='app.js') }}?v=16"
+></script>
+
+</body>
+</html>
