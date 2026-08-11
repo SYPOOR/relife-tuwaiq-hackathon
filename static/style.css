@@ -1200,7 +1200,7 @@ body.onboarding-open { overflow: hidden; }
     background: #dfe4dc;
     width: 100%;
     height: auto;
-    max-height: min(62dvh, 580px);
+    max-height: min(70dvh, 680px);
     aspect-ratio: 4 / 5;
 }
 .community-post .post-photo-wrap::before {
@@ -1229,7 +1229,7 @@ body.onboarding-open { overflow: hidden; }
     height: 100%;
     max-height: none;
     aspect-ratio: auto;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center bottom;
     box-shadow: 0 0 28px rgba(21,35,24,.12);
 }
@@ -1237,21 +1237,22 @@ body.onboarding-open { overflow: hidden; }
 @media (max-width: 650px) {
     .community-post .post-photo-wrap {
         height: auto;
-        max-height: min(56dvh, 480px);
+        max-height: min(64dvh, 560px);
         aspect-ratio: 4 / 5;
     }
     .community-post .community-photo {
         height: 100%;
         max-height: none;
         aspect-ratio: auto;
-        object-fit: contain;
+        object-fit: cover;
+        object-position: center bottom;
     }
 }
 
 @media (max-height: 700px) and (max-width: 650px) {
     .community-post .post-photo-wrap {
         height: auto;
-        max-height: 50dvh;
+        max-height: 56dvh;
         min-height: 0;
         aspect-ratio: 4 / 5;
     }
