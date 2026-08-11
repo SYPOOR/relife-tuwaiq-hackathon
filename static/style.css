@@ -323,11 +323,11 @@ main, section, article, aside, header, footer, nav, div { min-width: 0; }
 .ideas-ai-image { position: relative; isolation: isolate; margin-top: 17px; overflow: hidden; border: 4px solid white; border-radius: 22px; box-shadow: var(--shadow-md); }
 .ideas-ai-image img { width: 100%; display: block; aspect-ratio: 1/1; object-fit: cover; }
 .ideas-ai-image > span { position: absolute; right: 10px; bottom: 10px; z-index: 4; max-width: calc(100% - 20px); padding: 7px 9px; border-radius: 10px; background: rgba(19,52,36,.82); color: white; font-size: 8px; }
-.idea-hotspots { position: absolute; inset: 0; z-index: 3; display: grid; grid-template: repeat(2,1fr)/repeat(2,1fr); }
+.idea-hotspots { position: absolute; inset: 0; z-index: 3; display: grid; grid-template: repeat(2,1fr)/repeat(2,1fr); direction: ltr; }
 .idea-hotspots a { min-width: 0; display: flex; align-items: flex-end; gap: 6px; padding: 10px; color: white; background: linear-gradient(transparent 62%,rgba(13,28,18,.58)); opacity: 0; transition: opacity .2s; }
 .idea-hotspots a:hover, .idea-hotspots a:focus-visible { opacity: 1; }
 .idea-hotspots b { width: 24px; height: 24px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 8px; background: var(--forest-700); font-size: 9px; }
-.idea-hotspots small { font-size: 8px; font-weight: 700; }
+.idea-hotspots small { direction: rtl; font-size: 8px; font-weight: 700; }
 .reuse-list { display: grid; gap: 9px; margin-top: 18px; }
 .list-heading { display: flex; align-items: end; justify-content: space-between; gap: 8px; margin: 2px; }
 .list-heading span { font-size: 12px; font-weight: 800; }
@@ -347,8 +347,8 @@ main, section, article, aside, header, footer, nav, div { min-width: 0; }
 /* Idea */
 .idea-generated-image, .idea-placeholder { min-height: 0; position: relative; overflow: hidden; aspect-ratio: 1/1; }
 .idea-generated-image img { width: 200%; height: 200%; max-width: none; position: absolute; object-fit: cover; }
-.idea-panel-1 img { top: 0; right: 0; } .idea-panel-2 img { top: 0; right: -100%; }
-.idea-panel-3 img { top: -100%; right: 0; } .idea-panel-4 img { top: -100%; right: -100%; }
+.idea-panel-1 img { top: 0; right: -100%; } .idea-panel-2 img { top: 0; right: 0; }
+.idea-panel-3 img { top: -100%; right: -100%; } .idea-panel-4 img { top: -100%; right: 0; }
 .idea-placeholder { display: grid; place-content: center; padding: 25px; background: var(--sand); text-align: center; }
 .idea-placeholder-symbol { font-size: 45px; }
 .idea-placeholder h2 { margin-top: 10px; font-size: 23px; }
